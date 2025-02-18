@@ -6,15 +6,14 @@
  * @param velocity новое значение скорости
  */
 void Ball::setVelocity(const Velocity& velocity) {
-    // TODO: место для доработки
+    this->velocity = velocity;
 }
 
 /**
  * @return скорость объекта
  */
 Velocity Ball::getVelocity() const {
-    // TODO: место для доработки
-    return {};
+    return this->velocity;
 }
 
 /**
@@ -26,7 +25,7 @@ Velocity Ball::getVelocity() const {
  * @param painter контекст отрисовки
  */
 void Ball::draw(Painter& painter) const {
-    // TODO: место для доработки
+    painter.draw(this->center, this->radius, this->color);
 }
 
 /**
@@ -34,15 +33,14 @@ void Ball::draw(Painter& painter) const {
  * @param center новый центр объекта
  */
 void Ball::setCenter(const Point& center) {
-    // TODO: место для доработки
+    this->center = center;
 }
 
 /**
  * @return центр объекта
  */
 Point Ball::getCenter() const {
-    // TODO: место для доработки
-    return {};
+    return this->center;
 }
 
 /**
@@ -51,8 +49,16 @@ Point Ball::getCenter() const {
  * не требуется
  */
 double Ball::getRadius() const {
-    // TODO: место для доработки
-    return {};
+    return this->radius;
+}
+
+/**
+ * @brief Задает радиус объекта
+ * @details несмотря на то, что метод setRadius()
+ * не требуется. Позже надо выяснить, что имелось в виду
+ */
+void Ball::setRadius(const double& radius) {
+    this->radius = radius;
 }
 
 /**
@@ -63,6 +69,38 @@ double Ball::getRadius() const {
  * эквивалентна объему: PI * radius^3 * 4. / 3.
  */
 double Ball::getMass() const {
-    // TODO: место для доработки
-    return {};
+    double mass = (M_PI * std::pow(this->getRadius(), 3) * 4.) / 3.;
+    return mass;
+}
+
+/**
+ * @brief Задает цвет объекта
+ * @details 
+ */
+void Ball::setColor(const Color& color) {
+    this->color = color;
+}
+
+/**
+ * @brief Возвращает цвет объекта
+ * @details 
+ */
+Color Ball::getColor() const {
+    return this->color;
+}
+
+/**
+ * @brief Задает способность ствлкиваться с другими объектами для объекта
+ * @details 
+ */
+void Ball::setCollidable(const bool& collidable) {
+    this->collidable = collidable;
+}
+
+/**
+ * @brief Возвращает способность ствлкиваться с другими объектами для объекта
+ * @details 
+ */
+bool Ball::getCollidable() const {
+    return this->collidable;
 }

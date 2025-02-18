@@ -7,6 +7,31 @@
 // Изменять не следует
 static constexpr double timePerTick = 0.001;
 
+std::istream& operator>>(std::istream& stream, Color& color) {
+    double red;
+    double green;
+    double blue;
+    stream >> red >> green >> blue;
+    color = Color(red, green, blue);
+    return stream;
+}
+
+std::istream& operator>>(std::istream& stream, Point& center) {
+    double x;
+    double y;
+    stream >> x >> y;
+    center = Point(x, y);
+    return stream;
+}
+
+std::istream& operator>>(std::istream& stream, Velocity& velocity) {
+    double vx;
+    double vy;
+    stream >> vx >> vy;
+    velocity = Velocity(Point(vx, vy));
+    return stream;
+}
+
 /**
  * Конструирует объект мира для симуляции
  * @param worldFilePath путь к файлу модели мира
@@ -32,26 +57,21 @@ World::World(const std::string& worldFilePath) {
      * как и (red, green, blue). Опять же, можно упростить
      * этот код, научившись читать сразу Point, Color...
      */
-    double x;
-    double y;
-    double vx;
-    double vy;
+    Point center;
+    Velocity velocity;
+    Color color;
     double radius;
-
-    double red;
-    double green;
-    double blue;
-
     bool isCollidable;
 
     // Здесь не хватает обработки ошибок, но на текущем
     // уровне прохождения курса нас это устраивает
     while (stream.peek(), stream.good()) {
-        // Читаем координаты центра шара (x, y) и вектор
-        // его скорости (vx, vy)
-        stream >> x >> y >> vx >> vy;
+        // Читаем координаты центра шара (x, y)
+        stream >> center;
+        // Читаем вектор скорости шара (vx, vy)
+        stream >> velocity;
         // Читаем три составляющие цвета шара
-        stream >> red >> green >> blue;
+        stream >> color;
         // Читаем радиус шара
         stream >> radius;
         // Читаем свойство шара isCollidable, которое
@@ -69,6 +89,13 @@ World::World(const std::string& worldFilePath) {
         // сконструируем объект Ball ball;
         // добавьте его в конец контейнера вызовом
         // balls.push_back(ball);
+        Ball ball;
+        ball.setCenter(center);
+        ball.setVelocity(velocity);
+        ball.setColor(color);
+        ball.setRadius(radius);
+        ball.setCollidable(isCollidable);
+        balls.push_back(ball);
     }
 }
 

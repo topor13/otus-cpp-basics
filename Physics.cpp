@@ -29,8 +29,10 @@ void Physics::collideBalls(std::vector<Ball>& balls) const {
             const double collisionDistance2 =
                 collisionDistance * collisionDistance;
 
-            if (distanceBetweenCenters2 < collisionDistance2) {
-                processCollision(*a, *b, distanceBetweenCenters2);
+            if (b->getCollidable() && a->getCollidable()) {
+                if (distanceBetweenCenters2 < collisionDistance2) {
+                    processCollision(*a, *b, distanceBetweenCenters2);
+                }
             }
         }
     }
@@ -40,19 +42,22 @@ void Physics::collideWithBox(std::vector<Ball>& balls) const {
     for (Ball& ball : balls) {
         const Point p = ball.getCenter();
         const double r = ball.getRadius();
+        const bool collidable = ball.getCollidable();
         // определяет, находится ли v в диапазоне (lo, hi) (не включая границы)
         auto isOutOfRange = [](double v, double lo, double hi) {
             return v < lo || v > hi;
         };
 
-        if (isOutOfRange(p.x, topLeft.x + r, bottomRight.x - r)) {
-            Point vector = ball.getVelocity().vector();
-            vector.x = -vector.x;
-            ball.setVelocity(vector);
-        } else if (isOutOfRange(p.y, topLeft.y + r, bottomRight.y - r)) {
-            Point vector = ball.getVelocity().vector();
-            vector.y = -vector.y;
-            ball.setVelocity(vector);
+        if (collidable) {
+            if (isOutOfRange(p.x, topLeft.x + r, bottomRight.x - r)) {
+                Point vector = ball.getVelocity().vector();
+                vector.x = -vector.x;
+                ball.setVelocity(vector);
+            } else if (isOutOfRange(p.y, topLeft.y + r, bottomRight.y - r)) {
+                Point vector = ball.getVelocity().vector();
+                vector.y = -vector.y;
+                ball.setVelocity(vector);
+            }
         }
     }
 }

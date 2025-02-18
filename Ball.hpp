@@ -2,6 +2,7 @@
 #include "Painter.hpp"
 #include "Point.hpp"
 #include "Velocity.hpp"
+#include "Color.hpp"
 
 class Ball {
 public:
@@ -12,4 +13,16 @@ public:
     Point getCenter() const;
     double getRadius() const;
     double getMass() const;
+    void setColor(const Color& color);
+    Color getColor() const;
+    void setRadius(const double& radius);
+    void setCollidable(const bool& collidable);
+    bool getCollidable() const;
+
+private:
+    Point center;
+    Velocity velocity;
+    double radius;
+    Color color;
+    bool collidable;
 };
