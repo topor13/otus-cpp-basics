@@ -1,17 +1,14 @@
 cmake_minimum_required(VERSION 3.12)
 
-project(01.hello_world)
+project(06.containers)
 
-add_executable(hello_world 
-    src/include/example.h
-    src/include/move_me_out.h
-    src/hello_world.cpp
-    src/example.cpp
-    src/move_me_out.cpp
-    
+add_executable(containers 
+    src/containers.cpp
+    src/include/list_container.hpp
+    src/include/serial_container.hpp
 )
 
-set_target_properties(hello_world PROPERTIES
+set_target_properties(containers PROPERTIES
     CXX_STANDARD 17
     CXX_STANDARD_REQUIRED ON
 )
