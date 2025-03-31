@@ -9,6 +9,8 @@ public:
 		data_ = new T[last_];
 	}
 
+	~SerialContainer() {}
+
 	void push_back(T value) {
 		T *new_region = new T[last_ + 1]; // новая область памяти
 		for (size_t i = 0; i < last_; ++i) {
@@ -73,8 +75,8 @@ public:
 	}
 
 	void print() {
-		int j = 0;
-		int res;
+		size_t j = 0;
+		T res;
 		std::string delimiter = "";
 		while (this->get(j, res)) {
 			std::cout << delimiter << res;

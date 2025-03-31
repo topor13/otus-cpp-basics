@@ -10,6 +10,15 @@ public:
 		m_first = nullptr;
 	}
 
+	~ListContainer() {
+		Node* current = m_first;
+		while (current) {
+			Node* next = current->next;
+			delete current;
+			current = next;
+		}
+	}
+
     void push_back(T value) {
         Node* new_node = new Node{}; // создание нового узла
         new_node->prev = m_last; // предыдущим элементом станет последний
@@ -28,6 +37,7 @@ public:
 	void insert(T value, const size_t pos) {
 		Node* new_node = new Node{}; // создание нового узла
 		new_node->data = value; // сохраняем пользовательские данные
+		if (pos > m_size) return; // если пытаемся вставить данные за границами контейнера
 		if (m_size == 0) {
 			new_node->prev = nullptr; // В случае если это первый элемент
 			new_node->next = nullptr;
@@ -115,8 +125,8 @@ public:
 	}
 
 	void print() {
-		int j = 0;
-		int res;
+		size_t j = 0;
+		T res;
 		std::string delimiter = "";
 		while (this->get(j, res)) {
 			std::cout << delimiter << res;
