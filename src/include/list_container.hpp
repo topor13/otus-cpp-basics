@@ -17,6 +17,9 @@ public:
 			delete current;
 			current = next;
 		}
+		this->m_size = 0;
+		this->m_first = nullptr;
+		this->m_last = nullptr;
 	}
 
     void push_back(T value) {
@@ -62,6 +65,10 @@ public:
 		m_size += 1;
 	}
 
+	void push_front(T value) {
+		this->insert(value, 0);
+    }
+
 	bool get(const size_t pos, T &out) const 
 	{
 		if (pos >= m_size)
@@ -106,12 +113,16 @@ public:
 			if (i == pos) {
 				prev_node = drop_node->prev;
 				next_node = drop_node->next;
-
+				
 				if (prev_node) {
 					prev_node->next = next_node;
+				} else {
+					m_first = drop_node->next;
 				}
 				if (next_node) {
 					next_node->prev = prev_node;
+				} else {
+					m_last = drop_node->prev;
 				}
 
 				delete drop_node;
@@ -121,6 +132,28 @@ public:
 		}
 
 		m_size--;
+		return true;
+	}
+
+	bool pop_back() {
+		return this->erase(this->m_size - 1);
+	}
+
+	bool pop_front() {
+		return this->erase(0);
+	}
+
+	bool clear()
+	{
+		bool res;
+		for (size_t i = 0; i < this->m_size; i++)
+		{
+			res = this->erase(i);
+			if (!res)
+			{
+				return false;
+			}
+		}
 		return true;
 	}
 
