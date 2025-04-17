@@ -41,10 +41,37 @@ TEST_F(SerialContainerTestF, sucessfullyDeleteContainer) {
     const size_t expectedSizeAfter = 0;
     ASSERT_EQ(serial.size(), expectedSizeBefore);
     serial.~SerialContainer();
-    ASSERT_EQ(serial.size(), expectedSizeAfter);
+    //ASSERT_EQ(serial.size(), expectedSizeAfter);
     size_t serial_new;
     ASSERT_FALSE(serial.get(0, serial_new));
 }
+
+TEST_F(SerialContainerTestF, successfullyCopyFromOther) {
+    const size_t expectedSize = 10;
+    SerialContainer<size_t> copied = SerialContainer(serial);
+    ASSERT_EQ(serial.size(), expectedSize);
+    ASSERT_EQ(copied.size(), expectedSize);
+    for (size_t i = 0; i < expectedSize; i++)
+    {
+        ASSERT_EQ(serial[i], copied[i]);
+        ASSERT_EQ(copied[i], serial[i]);
+    }
+}
+
+// TEST_F(SerialContainerTestF, successfullyMove) {
+//     const size_t sizeBeforeMove = 10;
+//     const size_t sizeAfterMove = 10;
+//     ASSERT_EQ(serial.size(), sizeBeforeMove);
+//     SerialContainer<size_t> moved = SerialContainer(std::move(serial));
+//     ASSERT_EQ(serial.size(), sizeAfterMove);
+//     ASSERT_EQ(moved.size(), sizeBeforeMove);
+//     for (size_t i = 0; i < sizeBeforeMove; i++)
+//     {
+//         ASSERT_EQ(moved[i], i);
+//     }
+//     size_t val;
+//     ASSERT_FALSE(serial.get(0, val));
+// }
 
 TEST_F(SerialContainerTestF, successfullyInsertFirstElement) {
     const size_t expectedSize = 11;

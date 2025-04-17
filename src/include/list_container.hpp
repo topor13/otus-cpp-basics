@@ -10,6 +10,16 @@ public:
 		m_first = nullptr;
 	}
 
+	ListContainer(const ListContainer<T>& other) {
+		m_size = 0;
+		m_last = nullptr;
+		m_first = nullptr;
+		for (size_t i = 0; i < other.size(); i++)
+		{
+			this->push_back(other[i]);
+		}
+	}
+
 	~ListContainer() {
 		Node* current = m_first;
 		while (current) {
@@ -17,9 +27,9 @@ public:
 			delete current;
 			current = next;
 		}
-		this->m_size = 0;
-		this->m_first = nullptr;
-		this->m_last = nullptr;
+		m_last = nullptr;
+		m_first = nullptr;
+		m_size = 0;
 	}
 
     void push_back(T value) {

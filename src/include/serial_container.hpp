@@ -9,12 +9,28 @@ public:
 		m_data = new T[m_size];
 	}
 
-	~SerialContainer() {
-		if (this->m_data) {
-			delete[] this->m_data;
+	SerialContainer(const SerialContainer<T>& other) {
+		m_size = other.size();
+		m_data = new T[m_size];
+		for (size_t i = 0; i < m_size; i++)
+		{
+			m_data[i] = other[i];
 		}
-		this->m_data = nullptr;
-		this->m_size = 0;
+	}
+
+	// SerialContainer(SerialContainer&& other) {
+	// 	m_size = other.size();
+	// 	m_data = other.m_data;
+	// 	other.m_data = nullptr;
+	// 	other.m_size = 0;
+	// }
+
+	~SerialContainer() {
+		if (m_data) {
+			delete[] m_data;
+			m_data = nullptr;
+		}
+		m_size = 0;
 	}
 
 	void push_back(T value) {
